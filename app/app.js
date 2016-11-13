@@ -11,6 +11,7 @@ var Search = require('./Components/Children/Search')
 var Saved = require('./Components/Children/Saved')
 
 // This code here allows us to render our main component (in this case "Main")
+// and nested sub-components (to share navbar and jumbotron display)
 ReactDOM.render((
 	<Router history={hashHistory}>
 		<Route path="/" component={Main}>

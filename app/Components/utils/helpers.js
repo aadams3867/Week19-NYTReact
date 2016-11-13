@@ -4,7 +4,7 @@ var axios = require('axios');
 // New York Times API Key
 var nytAPI = "8aa4038a8bcf45b08bdee33b15fae758";
 
-// Helper Functions (in this case the only one is runQuery)
+// Helper Functions
 var helpers = {
 
 	runQuery: function(searchTerms, beginDate, endDate){
@@ -16,8 +16,9 @@ var helpers = {
 		queryURL += "?q=" + $.param({ 
 			'api-key': nytAPI,
 			'q': searchTerms,
-			'begin_date': beginDate,
-			'end_date': endDate
+			// NYT API requires YYYYMMDD format for dates
+			'begin_date': beginDate + "0101",
+			'end_date': endDate + "1231"
 		});
 
 		// Perform a GET request

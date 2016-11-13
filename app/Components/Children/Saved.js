@@ -1,6 +1,8 @@
 // Include React 
 var React = require('react');
 
+							var articles = true;
+
 // Create the Saved Component
 var Saved = React.createClass({
 
@@ -12,33 +14,41 @@ var Saved = React.createClass({
 
 				<div className="row">
 
+					{/* *************** SAVED *************** */}
 					<div className="panel panel-default">
 						<div className="panel-heading">
-							<h3 className="panel-title"><span className="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Saved</h3>
+							<h3 className="panel-title"><span className="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Saved Articles</h3>
 						</div>
 						<div className="panel-body">
 
-							<ul className="list-group">
-								<div>
-									<li className="list-group-item">
-										<h3><em>{/*{TITLEofSavedArticle}*/}Title of Saved Article</em>
-											<span className="btn-group pull-right">								
-												<a href="LINK" target="_blank">
-													<button className="btn btn-success">View Article</button>
-												</a>
-												<button className="btn btn-danger">Delete</button>
-											</span>
-										</h3>
-										<p>
-											<span>Date Published: </span>
-											<span>{/*{DATE}*/}</span>
-										</p>
-									</li>
-								</div>
 
-							</ul>
+
+							{/*If (articles is false) then "Save your first article..." else (Display archive of saved articles)*/}
+							{ (articles == false) ? ("Save your first article...") : (
+
+								<ul className="list-group">
+									<div>
+										<li className="list-group-item">
+											<h3><em>{/*{TITLEofSavedArticle}*/}Title of Saved Article</em>
+												<span className="btn-group pull-right">								
+													<a href="LINK" target="_blank">
+														<button className="btn btn-info">View Article</button>
+													</a>
+													<button className="btn btn-danger">Delete</button>
+												</span>
+											</h3>
+											<p>
+												<span>Date Published: </span>
+												<span>{/*{DATE}*/}</span>
+											</p>
+										</li>
+									</div>
+
+								</ul>
+
+							) }
 							
-							<p>{this.props.address}</p>
+							<p>{this.props.archive}</p>
 
 						</div>
 					</div>
