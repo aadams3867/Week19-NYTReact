@@ -2,12 +2,22 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 
-// Include the Main Component
+// Import React-Router stuffs
+import { Router, Route, hashHistory } from 'react-router'
+
+// Include the Components
 var Main = require('./Components/Main')
+var Search = require('./Components/Children/Search')
+var Saved = require('./Components/Children/Saved')
 
 // This code here allows us to render our main component (in this case "Main")
-ReactDOM.render(
-
-	<Main />,
-	document.getElementById('app')
+ReactDOM.render((
+	<Router history={hashHistory}>
+		<Route path="/" component={Main}>
+			<Route path="/search" component={Search}/>
+			<Route path="/saved" component={Saved}/>
+		</Route>
+{/*		<Main />*/}
+	</Router>
+	), document.getElementById('app')
 )
