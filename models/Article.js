@@ -5,19 +5,19 @@ var Schema = mongoose.Schema;
 
 // Create article schema
 var ArticleSchema = new Schema({
-  // title is required
+  // Title of the stored article from the NYT
   title: {
     type:String,
     required:true,
     unique: true
   },
-  // date is required
+  // Date and Time the article was originally published
   date: {
     type: Date,
     required: true
-  }
-  // link is required
-  link: {
+  },
+  // URL of the article on nytimes.com
+  url: {
     type:String,
     required:true
   }

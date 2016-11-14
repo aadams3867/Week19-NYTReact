@@ -1,6 +1,6 @@
 // Include React 
-var React = require('react');
-																				var gotResults = true;
+var React = require('react');/*
+																				var gotResults = false;*/
 
 // Loop Function - contains loop code for displaying
 var Loop = require('./Loop');
@@ -14,7 +14,7 @@ var Search = React.createClass({
 			searchTerms: "",
 			startYear: "",
 			endYear: "",
-			results: ""
+			results: []
 		}
 	},
 
@@ -30,12 +30,13 @@ var Search = React.createClass({
 
 	// When a user submits...
 	handleClick: function(){
-		console.log("CLICK to search for: " + this.state.searchTerms);
-		console.log("from " + this.state.startYear + " to " + this.state.endYear);		
+		console.log("CLICK received.  Telling the Parent to search for: " + this.state.searchTerms + " from " + this.state.startYear + " to " + this.state.endYear);
 		this.props.setData(this.state.searchTerms, this.state.startYear, this.state.endYear);
 	},
 
 	render: function(){
+
+		var resultsArray = this.props.results;
 
 		return(
 			<div className="container">
@@ -73,18 +74,31 @@ var Search = React.createClass({
 						
 						<div className="panel-body">
 
-							{/*If (gotResults is false) then "Enter search terms to begin..." else (Display top 5 results) */}
-							{ (gotResults == false) ? ("Enter search terms to begin...") : (
+							{/*If (this.props.results[0].title is empty) then "Enter search terms to begin..." else (Display top 5 results) */}
+							{ (resultsArray == []) ? ("Enter search terms to begin...") : (<div>{resultsArray}</div>) }
 
-								<ul className="list-group">
+{/*									<ul className="list-group">
 									
-									
-										
-										<div>
+								{resultsArray.map(function(object, i){
+										return <li key={i}>
+											{[ object.title,
+												object.date,
+												object.url
+											]}
+										</li>;
+									})}
+										fsafsdf*/}
+
+{/*
+									{resultsArray.map(function(result){
+										return ({result});
+									})}*/}
+
+{/*										<div>
 											<li className="list-group-item">
-												<h3><em>{/*{TITLEofSavedArticle}*/}Title of Article</em>
+												<h3><em>{resultsArray[0].title}</em>
 													<span className="btn-group pull-right">								
-														<a href="LINK" target="_blank">
+														<a href={this.props.results[0].url} target="_blank">
 															<button className="btn btn-info">View Article</button>
 														</a>
 														<button className="btn btn-success">Save</button>
@@ -92,7 +106,7 @@ var Search = React.createClass({
 												</h3>
 												<p>
 													<span>Date Published: </span>
-													<span>{/*{DATE}*/}</span>
+													<span>{this.props.results[0].date}</span>
 												</p>
 											</li>
 										</div>
@@ -103,7 +117,7 @@ var Search = React.createClass({
 
 
 
-							) }
+							)*/ }
 					  
 						</div>
 					</div>

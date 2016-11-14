@@ -19,7 +19,7 @@ var Main = React.createClass({
 			searchTerms: "",
 			startYear: "",
 			endYear: "",
-			results: ""
+			results: []
 		}
 	},
 
@@ -35,16 +35,17 @@ var Main = React.createClass({
 	// This lifecycle event will run every single time the Main component is updated by the children
 	componentDidUpdate: function(prevProps, prevState) {
 		if (prevState.searchTerms != this.state.searchTerms) {
-			console.log("Updated");
-			helpers.runQuery(this.state.searchTerms)
-				.then(function(data) {
-					if (data != this.state.results) {
-						console.log("HERE");
-						console.log(data);
+			console.log("Parent updated.  Sending an API request for NYT articles about");
+			helpers.runQuery(this.state.searchTerms, this.state.startYear, this.state.endYear)
+				.then(function(dataArray) {
+					if (dataArray != this.state.results) {
+						console.log("5 new and extremely relevant articles received:");
+						console.log(dataArray);
 
 						this.setState({
-							results: data
+							results: dataArray
 						})
+						console.log("Array of articles sent to Search Child for display as Results!");
 					}
 				// This code is necessary to bind the keyword "this" when we say this.setState
 				// to actually mean the component itself and not the runQuery function.
@@ -94,7 +95,8 @@ var Main = React.createClass({
 						<div className="row" id="searchDiv">
 							<div className="col-lg-12">
 								{/*SEARCH and Results section*/}
-								<Search setData = {this.setData} results = {this.state.results}/>
+{/*								<Search { ...this.props }/>*/}
+								<Search setData = {this.setData} results = { [this.state.results[0], this.state.results[1], this.state.results[2], this.state.results[3], this.state.results[4]] }/>
 
 							</div>
 						</div>
@@ -103,7 +105,7 @@ var Main = React.createClass({
 						<div className="row" id="savedDiv">
 							<div className="col-lg-12">
 								{/*SAVED section*/}
-								<Saved archive = {this.state.results}/>
+								<Saved archive = {this.state.searchTerms}/>
 
 							</div>
 						</div>

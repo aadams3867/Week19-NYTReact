@@ -71,15 +71,15 @@ app.get('/api/saved', function(req, res){
 // This will save an article in MongoDB
 app.post('/api/saved', function(req, res){
 
-  var saveArticle = new Article(req.body);
+  var saveArticle = new Article(req.title, req.date, req.url);
 
   saveArticle.save(function(err, doc) {
     // Log any errors
     if (err) {
       console.log(err);
     } else {
-      console.log("New Note document successfully saved!");
-      console.log("Article ID: " + doc.articleId + "   Note: " + doc.body);
+      console.log("New Article document successfully saved!");
+      console.log("Article Title: " + doc.title + "   Date Published: " + doc.date + "   URL: " + doc.url);
       res.send(doc);
     }
   });
@@ -89,32 +89,21 @@ app.post('/api/saved', function(req, res){
 
 // This will delete a saved article in MongoDB
 app.delete('/api/saved', function(req, res){
-    connection.query('DELETE FROM plans WHERE id = ?', [req.body.id], function(err, result) {
-      if (err) throw err;
-      res.redirect('/');
-    });
-});
-
-
-
-/*// Delete one note from the DB
-app.get('/delete/:id', function(req, res) {
-
-  // Remove the one note using the note's _id
-  Note.remove({'_id': req.params.id})
+  // Remove the one saved article using the article's _id
+  Article.remove({'_id': req.params.id})
     .exec(function(err, doc) {
       if (err) {
         console.log(err);
       } else {
-        console.log("One Note document successfully deleted!");
-        console.log("Note ID to be deleted: " + req.params.id);
+        console.log("One Article document successfully deleted!");
+        console.log("Article ID: " + req.params.id);
         res.send(doc);
       }
     })
 });
 
 
-// Delete all notes associated with a particular article from the DB
+/*// Delete all notes associated with a particular article from the DB
 app.get('/deleteall/:id', function(req, res) {
   // Remove all the notes using the article's id
   Note.remove({'articleId': req.params.id})

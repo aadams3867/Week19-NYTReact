@@ -13,7 +13,7 @@ var helpers = {
 
 		// Assemble the query for the NY Times
 		var queryURL = "https://api.nytimes.com/svc/search/v2/articlesearch.json"
-		queryURL += "?q=" + $.param({ 
+		queryURL += "?" + $.param({ 
 			'api-key': nytAPI,
 			'q': searchTerms,
 			// NYT API requires YYYYMMDD format for dates
@@ -26,7 +26,19 @@ var helpers = {
 			.then(function(response){
 
 				console.log(response);
-				return response.data.results[0].formatted;
+
+				var items = [];
+				var title, date, url;
+				for (var i=0; i<5; i++) {
+					title = response.data.response.docs[i].headline.main;
+					date = response.data.response.docs[i].pub_date;
+					url = response.data.response.docs[i].web_url;
+					items.push({title, date, url});
+				}
+
+				console.log(items);
+
+				return items;
 		})
 
 	}
