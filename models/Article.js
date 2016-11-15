@@ -1,9 +1,8 @@
-// require mongoose
 var mongoose = require('mongoose');
-// create Schema class
+// Create Schema class
 var Schema = mongoose.Schema;
 
-// Create article schema
+// Create Article schema
 var ArticleSchema = new Schema({
   // Title of the stored article from the NYT
   title: {
@@ -26,5 +25,5 @@ var ArticleSchema = new Schema({
 // Create the Article model with the ArticleSchema
 var Article = mongoose.model('Article', ArticleSchema);
 
-// export the model
+// Export the model
 module.exports = Article;

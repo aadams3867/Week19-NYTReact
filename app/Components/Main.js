@@ -6,6 +6,7 @@ import { IndexLink } from 'react-router'
 // Here we include all of the sub-components
 var Search = require('./Children/Search');
 var Saved = require('./Children/Saved');
+var Loop = require('./Children/Loop');
 
 // Helper Function - contains GET request code for NYT API
 var helpers = require('./utils/helpers.js');
@@ -23,7 +24,7 @@ var Main = React.createClass({
 		}
 	},
 
-	// Create a function for updating the data from the form input
+	// Create a function for updating the data from the form input (Child --> Parent)
 	setData: function(term, start, end){
 		this.setState({
 			searchTerms: term,
@@ -32,10 +33,11 @@ var Main = React.createClass({
 		})
 	},
 
-	// This lifecycle event will run every single time the Main component is updated by the children
+	// This lifecycle event will run every single time the Main component is updated by the children (clicks, etc.)
 	componentDidUpdate: function(prevProps, prevState) {
 		if (prevState.searchTerms != this.state.searchTerms) {
 			console.log("Parent updated.  Sending an API request for NYT articles about");
+			
 			helpers.runQuery(this.state.searchTerms, this.state.startYear, this.state.endYear)
 				.then(function(dataArray) {
 					if (dataArray != this.state.results) {

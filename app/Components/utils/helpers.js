@@ -7,9 +7,10 @@ var nytAPI = "8aa4038a8bcf45b08bdee33b15fae758";
 // Helper Functions
 var helpers = {
 
-	runQuery: function(searchTerms, beginDate, endDate){
+	// Runs the query to find relevant articles
+	runQuery: function(searchTerms, beginYear, endYear){
 
-		console.log(searchTerms + " from " + beginDate + " - " + endDate);
+		console.log(searchTerms + " from " + beginYear + " - " + endYear);
 
 		// Assemble the query for the NY Times
 		var queryURL = "https://api.nytimes.com/svc/search/v2/articlesearch.json"
@@ -17,8 +18,8 @@ var helpers = {
 			'api-key': nytAPI,
 			'q': searchTerms,
 			// NYT API requires YYYYMMDD format for dates
-			'begin_date': beginDate + "0101",
-			'end_date': endDate + "1231"
+			'begin_date': beginYear + "0101",	// Jan 1
+			'end_date': endYear + "1231"		// Dec 31
 		});
 
 		// Perform a GET request
@@ -29,7 +30,7 @@ var helpers = {
 
 				var items = [];
 				var title, date, url;
-				for (var i=0; i<5; i++) {
+				for (var i=0; i<5; i++) {	// only need 5 articles
 					title = response.data.response.docs[i].headline.main;
 					date = response.data.response.docs[i].pub_date;
 					url = response.data.response.docs[i].web_url;

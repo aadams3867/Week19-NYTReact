@@ -14,11 +14,17 @@ var mongoose = require('mongoose');
 var Promise = require('bluebird');
 mongoose.Promise=Promise;
 
-// Use morgan and bodyparser with our app
+// Require Article Schema
+var Article = require('./models/Article.js');
+
+// Use Morgan and Body-parser for Logging
 app.use(logger('dev'));
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
-  extended: false
+  extended: true
 }));
+app.use(bodyParser.text());
+app.use(bodyParser.json({type:'application/vnd.api+json'}));
 
 // Override with POST having ?_method=DELETE
 app.use(methodOverride('_method'));
@@ -27,7 +33,9 @@ app.use(methodOverride('_method'));
 app.use(express.static('public'));
 
 
-// Database configuration with Mongoose
+/* Mongoose
+ * ================================================== */
+// MongoDB Configuration configuration (Change this URL to your own DB)
 mongoose.connect('mongodb://localhost/nytreact');
 var db = mongoose.connection;
 
@@ -42,9 +50,6 @@ db.once('open', function() {
 });
 
 
-// And we bring in our Article model
-var Article = require('./models/Article.js');
-
 /* Routes
  * ================================================== */
 
@@ -54,9 +59,13 @@ app.get('/', function(req, res) {
 });
 
 
-// This will query MongoDB for all saved articles
+// This route sends GET requests to retrieve the articles saved in the MongoDB.
+// We will call this route the moment our page gets rendered
 app.get('/api/saved', function(req, res){
-  Article.find({}, function(err, doc) {
+  
+  // We will find all the saved articles, sort them in descending order, and then limit the articles to 5
+  Article.find({}).sort([['date', 'descending']]).limit(5)
+    .exec( function(err, doc) {
     // Log any errors
     if (err) {
       console.log(err);
@@ -68,9 +77,8 @@ app.get('/api/saved', function(req, res){
 });
 
 
-// This will save an article in MongoDB
+// This route sends POST requests to save an article in MongoDB
 app.post('/api/saved', function(req, res){
-
   var saveArticle = new Article(req.title, req.date, req.url);
 
   saveArticle.save(function(err, doc) {
@@ -87,7 +95,7 @@ app.post('/api/saved', function(req, res){
 });
 
 
-// This will delete a saved article in MongoDB
+// This route sends DELETE requests to delete a saved article in MongoDB
 app.delete('/api/saved', function(req, res){
   // Remove the one saved article using the article's _id
   Article.remove({'_id': req.params.id})

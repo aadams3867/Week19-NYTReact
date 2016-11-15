@@ -1,3 +1,15 @@
+// Include React 
+var React = require('react');
+
+{/* Here we use a map function to loop through an array in JSX*/}
+/*{this.props.history.map(function(search, i)
+	{
+		return <p key={i}>{search.location} - {search.date}</p> 
+	}
+)}*/
+
+
+
 // This will create a loop that repeats numTimes
 function Loop() {
 
@@ -10,3 +22,6 @@ function Loop() {
 	}
 	return <div>{items}</div>;
 }
+
+// Export the component back for use in other files
+module.exports = Loop;
