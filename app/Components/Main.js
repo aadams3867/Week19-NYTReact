@@ -19,7 +19,8 @@ var Main = React.createClass({
 			searchTerms: "",
 			startYear: "",
 			endYear: "",
-			results: []
+			results: [],
+			archive: []
 		}
 	},
 
@@ -51,6 +52,22 @@ var Main = React.createClass({
 				// to actually mean the component itself and not the runQuery function.
 				}.bind(this))
 		}
+	},
+
+	// The moment the page renders, get the Archive
+	componentDidMount: function(){
+
+		// Get the latest archive.
+		helpers.getArchive()
+			.then(function(response){
+				if (response != this.state.archive){
+					console.log ("Archive: ", response);
+
+					this.setState({
+						archive: response
+					})
+				}
+			}.bind(this))
 	},
 
 	// Here we render the function
@@ -105,7 +122,7 @@ var Main = React.createClass({
 						<div className="row" id="savedDiv">
 							<div className="col-lg-12">
 								{/*SAVED section*/}
-								<Saved archive = {this.state.searchTerms}/>
+								<Saved archive = { this.state.archive }/>
 
 							</div>
 						</div>

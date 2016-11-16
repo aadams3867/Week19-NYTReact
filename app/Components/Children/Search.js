@@ -60,7 +60,7 @@ var Search = React.createClass({
 						
 						<div className="panel-body">
 
-							{/*If (resultsArray is empty) then "Enter search terms to begin..." else (Display top 5 results) */}
+							{/*If (resultsArray is empty) then ("Enter search terms to begin...") else (Display top 5 results) */}
 							{ (!resultsArray.length) ? ("Enter search terms to begin...") : (
 
 								<ul className="list-group">

@@ -1,12 +1,19 @@
 // Include React 
 var React = require('react');
 
-							var articles = true;
-
 // Create the Saved Component
 var Saved = React.createClass({
 
+/*	// Set generic states associated with a blank form
+	getInitialState: function(){
+		return {
+			archive: []
+		}
+	},*/
+
 	render: function(){
+
+		var archive = this.props.archive;
 
 		return(
 
@@ -21,34 +28,39 @@ var Saved = React.createClass({
 						</div>
 						<div className="panel-body">
 
-
-
-							{/*If (articles is false) then "Save your first article..." else (Display archive of saved articles)*/}
-							{ (articles == false) ? ("Save your first article...") : (
+							{/*If (archive is empty) then ("Save your first article...") else (Display archive of saved articles)*/}
+							{ (!archive.length) ? ("Save your first article...") : (
 
 								<ul className="list-group">
-									<div>
-										<li className="list-group-item">
-											<h3><em>{/*{TITLEofSavedArticle}*/}Title of Saved Article</em>
-												<span className="btn-group pull-right">								
-													<a href="LINK" target="_blank">
-														<button className="btn btn-info">View Article</button>
-													</a>
-													<button className="btn btn-danger">Delete</button>
-												</span>
-											</h3>
-											<p>
-												<span>Date Published: </span>
-												<span>{/*{DATE}*/}</span>
-											</p>
+									
+									{/* Map function to loop through an array in JSX */}
+									{archive.map(function(article, i){
+										return <li className="list-group-item" key={i}>
+											<div>
+
+												<h3><em>{archive[i].title}</em>
+													<span className="btn-group pull-right">								
+														<a href="LINK" target="_blank">
+															<button className="btn btn-info">View Article</button>
+														</a>
+														<button className="btn btn-danger">Delete</button>
+													</span>
+												</h3>
+												<p>
+													<span>Date Published: </span>
+													<span>{archive[i].date}</span>
+												</p>
+											
+											</div>
 										</li>
-									</div>
+
+									})}
 
 								</ul>
 
 							) }
 							
-							<p>{this.props.archive}</p>
+{/*							<p>{this.props.archive}</p>*/}
 
 						</div>
 					</div>

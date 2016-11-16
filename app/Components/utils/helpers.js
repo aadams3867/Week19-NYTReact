@@ -44,6 +44,28 @@ var helpers = {
 				return items;
 		})
 
+	},
+
+	// Asks our own server to retrieve the archive of saved articles
+	getArchive: function(){
+
+		return axios.get('/api/saved')
+			.then(function(response){
+
+				console.log(response);
+				return response;
+			});
+	},
+
+	// This function posts new searches to our database.
+	postArchive: function(article){
+
+		return axios.post('/api/saved', {title: article.title, date: article.date, url: article.url})
+			.then(function(results){
+
+				console.log("Posted to MongoDB");
+				return(results);
+			})
 	}
 
 }
