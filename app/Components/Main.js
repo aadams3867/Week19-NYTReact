@@ -6,7 +6,6 @@ import { IndexLink } from 'react-router'
 // Here we include all of the sub-components
 var Search = require('./Children/Search');
 var Saved = require('./Children/Saved');
-var Loop = require('./Children/Loop');
 
 // Helper Function - contains GET request code for NYT API
 var helpers = require('./utils/helpers.js');
@@ -41,13 +40,12 @@ var Main = React.createClass({
 			helpers.runQuery(this.state.searchTerms, this.state.startYear, this.state.endYear)
 				.then(function(dataArray) {
 					if (dataArray != this.state.results) {
-						console.log("5 new and extremely relevant articles received:");
-						console.log(dataArray);
+						console.log("5 new and extremely relevant articles received by the Parent: ", dataArray);
 
 						this.setState({
 							results: dataArray
 						})
-						console.log("Array of articles sent to Search Child for display as Results!");
+
 					}
 				// This code is necessary to bind the keyword "this" when we say this.setState
 				// to actually mean the component itself and not the runQuery function.
@@ -98,7 +96,7 @@ var Main = React.createClass({
 							<div className="col-lg-12">
 								{/*SEARCH and Results section*/}
 {/*								<Search { ...this.props }/>*/}
-								<Search setData = {this.setData} results = { [this.state.results[0], this.state.results[1], this.state.results[2], this.state.results[3], this.state.results[4]] }/>
+								<Search setData = {this.setData} results = { this.state.results.slice(0, 5) }/>
 
 							</div>
 						</div>

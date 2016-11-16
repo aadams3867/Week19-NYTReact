@@ -1,22 +1,8 @@
 // Include React 
-var React = require('react');/*
-																				var gotResults = false;*/
-
-// Loop Function - contains loop code for displaying
-var Loop = require('./Loop');
+var React = require('react');
 
 // Create the Search Component
 var Search = React.createClass({
-
-	// Set a generic state associated with the text being searched for
-	getInitialState: function(){
-		return {
-			searchTerms: "",
-			startYear: "",
-			endYear: "",
-			results: []
-		}
-	},
 
 	// This function will respond to the user input
 	handleChange: function(event){
@@ -74,31 +60,19 @@ var Search = React.createClass({
 						
 						<div className="panel-body">
 
-							{/*If (this.props.results[0].title is empty) then "Enter search terms to begin..." else (Display top 5 results) */}
-							{ (resultsArray == []) ? ("Enter search terms to begin...") : (<div>{resultsArray}</div>) }
+							{/*If (resultsArray is empty) then "Enter search terms to begin..." else (Display top 5 results) */}
+							{ (!resultsArray.length) ? ("Enter search terms to begin...") : (
 
-{/*									<ul className="list-group">
-									
-								{resultsArray.map(function(object, i){
-										return <li key={i}>
-											{[ object.title,
-												object.date,
-												object.url
-											]}
-										</li>;
-									})}
-										fsafsdf*/}
-
-{/*
-									{resultsArray.map(function(result){
-										return ({result});
-									})}*/}
-
-{/*										<div>
-											<li className="list-group-item">
-												<h3><em>{resultsArray[0].title}</em>
+								<ul className="list-group">
+								
+									{/* Map function to loop through an array in JSX */}
+									{resultsArray.map(function(article, i){
+										return <li className="list-group-item" key={i}>
+											<div>
+												
+												<h3><em>{resultsArray[i].title}</em>
 													<span className="btn-group pull-right">								
-														<a href={this.props.results[0].url} target="_blank">
+														<a href={resultsArray[i].url} target="_blank">
 															<button className="btn btn-info">View Article</button>
 														</a>
 														<button className="btn btn-success">Save</button>
@@ -106,19 +80,15 @@ var Search = React.createClass({
 												</h3>
 												<p>
 													<span>Date Published: </span>
-													<span>{this.props.results[0].date}</span>
+													<span>{resultsArray[i].date}</span>
 												</p>
-											</li>
-										</div>
 
-
+											</div>
+										</li>
+									})}
 
 								</ul>
-
-
-
-							)*/ }
-					  
+							)}
 						</div>
 					</div>
 

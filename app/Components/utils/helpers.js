@@ -25,9 +25,10 @@ var helpers = {
 		// Perform a GET request
 		return axios.get(queryURL)
 			.then(function(response){
+				// Log ALL the data received
+				console.log("All the data received from the NYT: " , response);
 
-				console.log(response);
-
+				// Useful info extracted and pushed into an array
 				var items = [];
 				var title, date, url;
 				for (var i=0; i<5; i++) {	// only need 5 articles
@@ -37,7 +38,8 @@ var helpers = {
 					items.push({title, date, url});
 				}
 
-				console.log(items);
+				// Log the array of 5 objects
+				console.log("Just the useful data: " , items);
 
 				return items;
 		})
