@@ -43,7 +43,7 @@ var MONGODB_URI = 'mongodb://heroku_37b4kdcf:86a2nmnuud4ijdmml6mbfanlrp@ds155727
 
 if (process.env.MONGODB_URI) {
   // If Heroku app is executing...
-  mongoose.connect(process.env.MONGODB_URI);
+  mongoose.connect(MONGODB_URI);
 } else {
   // If local machine is executing...
   mongoose.connect(localDbURI);
