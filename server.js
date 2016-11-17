@@ -39,9 +39,9 @@ app.use(express.static('public'));
 
 // Here we find an appropriate db to connect to,
 // defaulting to the localhost if Heroku isn't available
-var uristring = process.env.MONGODB_URI || 'mongodb://localhost/nytreact';
+/*var uristring = process.env.MONGODB_URI || 'mongodb://localhost/nytreact';
 
-mongoose.connect (uristring);
+mongoose.connect (uristring);*/
 
 
 
@@ -57,7 +57,7 @@ if (process.env.MONGODB_URI) {
   mongoose.connect(localDbURI);
 }*/
 
-/*mongoose.connect('mongodb://heroku_37b4kdcf:86a2nmnuud4ijdmml6mbfanlrp@ds155727.mlab.com:55727/heroku_37b4kdcf');*/
+mongoose.connect('mongodb://heroku_37b4kdcf:86a2nmnuud4ijdmml6mbfanlrp@ds155727.mlab.com:55727/heroku_37b4kdcf');
 
 var db = mongoose.connection;
 
