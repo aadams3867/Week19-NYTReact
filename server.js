@@ -37,7 +37,15 @@ app.use(express.static('public'));
  * ================================================== */
 // MongoDB Configuration configuration
 
-var localDbURI = 'mongodb://localhost/nytreact';
+// Here we find an appropriate db to connect to,
+// defaulting to the localhost if Heroku isn't available
+var uristring = process.env.MONGODB_URI || 'mongodb://localhost/nytreact';
+
+mongoose.connect (uristring);
+
+
+
+/*var localDbURI = 'mongodb://localhost/nytreact';
 // In GitBash, type  $ heroku config | grep MONGODB_URI   to get the following URI:
 var MONGODB_URI = 'mongodb://heroku_37b4kdcf:86a2nmnuud4ijdmml6mbfanlrp@ds155727.mlab.com:55727/heroku_37b4kdcf'
 
@@ -47,7 +55,7 @@ if (process.env.MONGODB_URI) {
 } else {
   // If local machine is executing...
   mongoose.connect(localDbURI);
-}
+}*/
 
 
 
