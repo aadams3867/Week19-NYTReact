@@ -52,8 +52,8 @@ var helpers = {
 		return axios.get('/api/saved')
 			.then(function(response){
 
-				console.log("Archive retrieved helpfully", response);
-				return response;
+				console.log("Archive retrieved helpfully", response.data);
+				return response.data;
 			});
 	},
 
@@ -63,7 +63,7 @@ var helpers = {
 		return axios.post('/api/saved', {title: title, date: date, url: url})
 			.then(function(results){
 
-				console.log("Posted to MongoDB helpfully", results.config.data);
+				console.log("Article saved to MongoDB helpfully", results.config.data);
 				return(results.config.data);
 			})
 	},
@@ -80,7 +80,7 @@ var helpers = {
 		})
 		.then(function(results){
 
-			console.log("Posted to MongoDB helpfully", results);
+			console.log("Article deleted from MongoDB helpfully", results);
 			return(results);
 		})
 	}

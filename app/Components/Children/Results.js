@@ -13,8 +13,23 @@ var Results = React.createClass({
 		
 		// Post the article to the db
 		helpers.postArchive(article.title, article.date, article.url)
-			.then(function(data) {}
-			.bind(this)
+			.then(function(data) {
+
+				// Get the revised list of saved articles
+				helpers.getArchive()
+					.then(function(articleData) {
+
+						this.setState({
+							archive: articleData
+						})
+						console.log("Revised saved articles list", articleData);
+						// Send the revised list back to the Parent
+/*						this.props.setArchive(articleData);*/
+
+					}.bind(this)
+				)
+
+			}.bind(this)
 		)
 
 

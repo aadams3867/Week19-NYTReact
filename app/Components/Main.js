@@ -34,9 +34,19 @@ var Main = React.createClass({
 		})
 	},
 
+	// Create a function for updating the Saved Articles list (Child --> Parent)
+	setArchive: function(arrayData){
+		this.setState({
+			archive: arrayData
+		})
+	},
+
 	// This lifecycle event will run every single time the Main component is updated by the children (clicks, etc.)
 	componentDidUpdate: function(prevProps, prevState) {
-		if (prevState.searchTerms != this.state.searchTerms) {
+	
+		// After an article search, update the Results section
+		if (this.state.searchTerms != "" && (prevState.searchTerms != this.state.searchTerms || prevState.startYear != this.state.startYear || prevState.endYear != this.state.endYear))
+		{
 			console.log("Parent updated.  Sending an API request for NYT articles about");
 			
 			helpers.runQuery(this.state.searchTerms, this.state.startYear, this.state.endYear)
@@ -54,6 +64,25 @@ var Main = React.createClass({
 				}.bind(this))
 		}
 
+		// After a save/delete to the Saved Articles in the db, update the Saved Articles section
+/*		if (prevState.archive.slice(0, 5) != this.state.archive.slice(0, 5))
+		{
+			console.log("Parent updated.  Updating the Saved Articles list display.");
+
+			helpers.getArchive()
+				.then(function(response){
+					if (response != this.state.archive){
+						console.log ("Archive: ", response);
+
+						this.setState({
+							archive: response.slice(0, 5)
+						})
+					}
+				}.bind(this)
+			)
+
+		}*/
+
 	},
 
 	// The moment the page renders, get the Archive
@@ -63,10 +92,10 @@ var Main = React.createClass({
 		helpers.getArchive()
 			.then(function(response){
 				if (response != this.state.archive){
-					console.log ("Archive: ", response.data);
+					console.log ("Archive: ", response);
 
 					this.setState({
-						archive: response.data
+						archive: response
 					})
 				}
 			}.bind(this))
@@ -124,7 +153,7 @@ var Main = React.createClass({
 						<div className="row" id="resultsDiv">
 							<div className="col-lg-12">
 								{/*RESULTS section*/}
-								<Results results={this.state.results.slice(0, 5) } archive = { this.state.archive.slice(0, 5) }/>
+								<Results setData = {this.setData} setArchive = {this.setArchive} results={this.state.results.slice(0, 5) } archive = { this.state.archive.slice(0, 5) }/>
 
 							</div>
 						</div>
@@ -133,7 +162,7 @@ var Main = React.createClass({
 						<div className="row" id="savedDiv">
 							<div className="col-lg-12">
 								{/*SAVED section*/}
-								<Saved setData = {this.setData} archive = { this.state.archive.slice(0, 5) }/>
+								<Saved setData = {this.setData} setArchive = {this.setArchive} archive = { this.state.archive.slice(0, 5) }/>
 
 							</div>
 						</div>

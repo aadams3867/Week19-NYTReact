@@ -7,22 +7,27 @@ var helpers = require('../utils/helpers.js');
 // Create the Saved Component
 var Saved = React.createClass({
 
-/*	// Set generic states associated with a blank form
-	getInitialState: function(){
-		return {
-			archive: []
-		}
-	},*/
-
-
 	// When a user deletes an article...
 	handleClick: function(article, event){
 		console.log("DELETE request received.  Telling the database to delete the following article: " , article);
 		
 		// Delete the article from the db
 		helpers.deleteSaved(article.title, article.date, article.url)
-			.then(function(data) {}
-			.bind(this)
+			.then(function(data) {
+
+				// Get the revised list of saved articles
+				helpers.getArchive()
+					.then(function(articleData) {
+
+						this.setState({
+							archive: articleData
+						})
+						console.log("Revised saved articles list", articleData);
+
+					}.bind(this)
+				)
+
+			}.bind(this)
 		)
 
 
