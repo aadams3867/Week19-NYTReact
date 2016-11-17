@@ -26,6 +26,7 @@ var Saved = React.createClass({
 						<div className="panel-heading">
 							<h3 className="panel-title"><span className="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Saved Articles</h3>
 						</div>
+
 						<div className="panel-body">
 
 							{/*If (archive is empty) then ("Save your first article...") else (Display archive of saved articles)*/}
@@ -40,7 +41,7 @@ var Saved = React.createClass({
 
 												<h3><em>{archive[i].title}</em>
 													<span className="btn-group pull-right">								
-														<a href="LINK" target="_blank">
+														<a href={archive[i].url} target="_blank">
 															<button className="btn btn-info">View Article</button>
 														</a>
 														<button className="btn btn-danger">Delete</button>

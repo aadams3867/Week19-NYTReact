@@ -61,10 +61,10 @@ var Main = React.createClass({
 		helpers.getArchive()
 			.then(function(response){
 				if (response != this.state.archive){
-					console.log ("Archive: ", response);
+					console.log ("Archive: ", response.data);
 
 					this.setState({
-						archive: response
+						archive: response.data
 					})
 				}
 			}.bind(this))
@@ -122,7 +122,7 @@ var Main = React.createClass({
 						<div className="row" id="savedDiv">
 							<div className="col-lg-12">
 								{/*SAVED section*/}
-								<Saved archive = { this.state.archive }/>
+								<Saved setData = {this.setData} archive = { this.state.archive.slice(0, 5) }/>
 
 							</div>
 						</div>

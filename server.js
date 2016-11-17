@@ -63,8 +63,11 @@ app.get('/', function(req, res) {
 // We will call this route the moment our page gets rendered
 app.get('/api/saved', function(req, res){
   
-  // We will find all the saved articles, sort them in descending order, and then limit the articles to 5
-  Article.find({}).sort([['date', 'descending']]).limit(5)
+  // Find all the saved articles, sort them in descending order, and then limit the articles to 5
+  // Article.find({}).sort([['date', 'descending']]).limit(5)
+  
+  // Find all the saved articles
+  Article.find({})
     .exec( function(err, doc) {
     // Log any errors
     if (err) {
@@ -79,7 +82,11 @@ app.get('/api/saved', function(req, res){
 
 // This route sends POST requests to save an article in MongoDB
 app.post('/api/saved', function(req, res){
-  var saveArticle = new Article(req.title, req.date, req.url);
+  var saveArticle = new Article(req.body);
+
+  var title = req.body.title;
+  var date = req.body.date;
+  var url = req.body.url;
 
   saveArticle.save(function(err, doc) {
     // Log any errors
@@ -87,8 +94,8 @@ app.post('/api/saved', function(req, res){
       console.log(err);
     } else {
       console.log("New Article document successfully saved!");
-      console.log("Article Title: " + doc.title + "   Date Published: " + doc.date + "   URL: " + doc.url);
-      res.send(doc);
+      console.log("Article Title: " + title + "   Date Published: " + date + "   URL: " + url);
+      res.send(doc._id);
     }
   });
 
@@ -97,34 +104,21 @@ app.post('/api/saved', function(req, res){
 
 // This route sends DELETE requests to delete a saved article in MongoDB
 app.delete('/api/saved', function(req, res){
-  // Remove the one saved article using the article's _id
-  Article.remove({'_id': req.params.id})
+
+  var url = req.params('url');
+
+  // Remove the one saved article using the article's url
+  Article.find({"url": url}).remove()
     .exec(function(err, doc) {
       if (err) {
         console.log(err);
       } else {
         console.log("One Article document successfully deleted!");
-        console.log("Article ID: " + req.params.id);
+        console.log("Article: " + req.params.title);
         res.send(doc);
       }
     })
 });
-
-
-/*// Delete all notes associated with a particular article from the DB
-app.get('/deleteall/:id', function(req, res) {
-  // Remove all the notes using the article's id
-  Note.remove({'articleId': req.params.id})
-    .exec(function(err, doc) {
-      if (err) {
-        console.log(err);
-      } else {
-        console.log("All the Note documents successfully deleted!");
-        console.log("Article ID: " + req.params.id);
-        res.send(doc);
-      }
-    })
-});*/
 
 
 /* Listener

@@ -52,19 +52,30 @@ var helpers = {
 		return axios.get('/api/saved')
 			.then(function(response){
 
-				console.log(response);
+				console.log("Archive retrieved", response);
 				return response;
 			});
 	},
 
-	// This function posts new searches to our database.
-	postArchive: function(article){
+	// Saves an article to our database.
+	postArchive: function(title, date, url){
 
-		return axios.post('/api/saved', {title: article.title, date: article.date, url: article.url})
+		return axios.post('/api/saved', {title: title, date: date, url: url})
 			.then(function(results){
 
-				console.log("Posted to MongoDB");
-				return(results);
+				console.log("Posted to MongoDB", results._id);
+				return(results._id);
+			})
+	},
+
+	// Deletes a saved article from our database.
+	deleteSaved: function(title, date, url){
+
+		return axios.delete('/api/saved', {title: title, date: date, url: url})
+			.then(function(results){
+
+				console.log("Posted to MongoDB", results._id);
+				return(results._id);
 			})
 	}
 

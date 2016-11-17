@@ -5,6 +5,9 @@ var ReactDOM = require('react-dom');
 // Import React-Router stuffs
 import { Router, Route, hashHistory } from 'react-router'
 
+// Include the IndexRoute (catch-all route)
+/*var IndexRoute	= Router.IndexRoute;*/
+
 // Include the Components
 var Main = require('./Components/Main')
 var Search = require('./Components/Children/Search')
@@ -17,6 +20,8 @@ ReactDOM.render((
 		<Route path="/" component={Main}>
 			<Route path="/search" component={Search}/>
 			<Route path="/saved" component={Saved}/>
+
+{/*			<IndexRoute component={Search}/>*/}
 		</Route>
 {/*		<Main />*/}
 	</Router>
