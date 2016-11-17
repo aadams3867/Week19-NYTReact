@@ -35,8 +35,20 @@ app.use(express.static('public'));
 
 /* Mongoose
  * ================================================== */
-// MongoDB Configuration configuration (Change this URL to your own DB)
-mongoose.connect('mongodb://localhost/nytreact');
+// MongoDB Configuration configuration
+
+var localDbURI = 'mongodb://localhost/nytreact';
+
+if (process.env.MONGODB_URI) {
+  // If Heroku app is executing...
+  mongoose.connect(process.env.MONGODB_URI);
+} else {
+  // If local machine is executing...
+  mongoose.connect(localDbURI);
+}
+
+
+
 var db = mongoose.connection;
 
 // Show any mongoose errors
