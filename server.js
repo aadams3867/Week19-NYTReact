@@ -38,7 +38,8 @@ app.use(express.static('public'));
 // MongoDB Configuration configuration
 
 var localDbURI = 'mongodb://localhost/nytreact';
-var MONGODB_URI = 'mongodb://<dbuser>:<dbpassword>@ds155727.mlab.com:55727/heroku_37b4kdcf'
+// In GitBash, type  $ heroku config | grep MONGODB_URI   to get the following URI:
+var MONGODB_URI = 'mongodb://heroku_37b4kdcf:86a2nmnuud4ijdmml6mbfanlrp@ds155727.mlab.com:55727/heroku_37b4kdcf'
 
 if (process.env.MONGODB_URI) {
   // If Heroku app is executing...
