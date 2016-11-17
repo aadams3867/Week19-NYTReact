@@ -20,19 +20,6 @@ var Search = React.createClass({
 		this.props.setData(this.state.searchTerms, this.state.startYear, this.state.endYear);
 	},
 
-	// When a user saves an article...
-	handleSave: function(article, event){
-		console.log("SAVE request received.  Telling the database to save the following article: " + article);
-
-		helpers.postArchive(article.title, article.date, article.url)
-			.then(function(data) {}
-			.bind(this))
-
-/*		// This binding is necessary to make `this` work in the callback
-		this.handleSave = this.handleSave.bind(this);
-		this.props.setData(this.state.archive.slice(0, 1));*/
-	},
-
 	render: function(){
 
 		var resultsArray = this.props.results;
@@ -62,48 +49,6 @@ var Search = React.createClass({
 									<div className="text-center"><button type="button" className="btn btn-primary btn-lg" onClick={this.handleClick}>Submit</button></div>
 								</div>
 							</form>
-						</div>
-					</div>
-
-					{/**************** RESULTS ****************/}
-					<div className="panel panel-default">
-						<div className="panel-heading">
-							<h3 className="panel-title"><span className="glyphicon glyphicon-th-list" aria-hidden="true"></span> Results</h3>
-						</div>
-						
-						<div className="panel-body">
-
-							{/*If (resultsArray is empty) then ("Enter search terms to begin...") else (Display top 5 results) */}
-							{ (!resultsArray.length) ? ("Enter search terms to begin...") : (
-
-								<ul className="list-group">
-								
-									{/* Map function to loop through an array in JSX */}
-									{resultsArray.map(function(article, i){
-										return <li className="list-group-item" key={i}>
-											<div>
-												
-												<h3><em>{article.title}</em>
-													<span className="btn-group pull-right">								
-														<a href={article.url} target="_blank">
-															<button className="btn btn-info">View Article</button>
-														</a>
-														<button className="btn btn-success">Save</button>
-{/*														<button className="btn btn-success" onClick={(e) => this.handleSave(e)}>Save</button>*/}
-{/*														<button className="btn btn-success" onClick={this.handleSave.bind(this, article)}>Save</button>*/}
-													</span>
-												</h3>
-												<p>
-													<span>Date Published: </span>
-													<span>{article.date}</span>
-												</p>
-
-											</div>
-										</li>
-									})}
-
-								</ul>
-							)}
 						</div>
 					</div>
 

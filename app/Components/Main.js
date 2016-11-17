@@ -5,9 +5,10 @@ import { IndexLink } from 'react-router'
 
 // Here we include all of the sub-components
 var Search = require('./Children/Search');
+var Results = require('./Children/Results');
 var Saved = require('./Children/Saved');
 
-// Helper Function - contains GET request code for NYT API
+// Helper Functions
 var helpers = require('./utils/helpers.js');
 
 // This is the main component.
@@ -52,6 +53,7 @@ var Main = React.createClass({
 				// to actually mean the component itself and not the runQuery function.
 				}.bind(this))
 		}
+
 	},
 
 	// The moment the page renders, get the Archive
@@ -111,9 +113,18 @@ var Main = React.createClass({
 
 						<div className="row" id="searchDiv">
 							<div className="col-lg-12">
-								{/*SEARCH and Results section*/}
+								{/*SEARCH section*/}
 {/*								<Search { ...this.props }/>*/}
 								<Search setData = {this.setData} results = { this.state.results.slice(0, 5) }/>
+
+							</div>
+						</div>
+
+
+						<div className="row" id="resultsDiv">
+							<div className="col-lg-12">
+								{/*RESULTS section*/}
+								<Results results={this.state.results.slice(0, 5) } archive = { this.state.archive.slice(0, 5) }/>
 
 							</div>
 						</div>

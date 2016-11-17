@@ -1,6 +1,9 @@
 // Include React 
 var React = require('react');
 
+// Helper Functions
+var helpers = require('../utils/helpers.js');
+
 // Create the Saved Component
 var Saved = React.createClass({
 
@@ -10,6 +13,20 @@ var Saved = React.createClass({
 			archive: []
 		}
 	},*/
+
+
+	// When a user deletes an article...
+	handleClick: function(article, event){
+		console.log("DELETE request received.  Telling the database to delete the following article: " , article);
+		
+		// Delete the article from the db
+		helpers.deleteSaved(article.title, article.date, article.url)
+			.then(function(data) {}
+			.bind(this)
+		)
+
+
+	},
 
 	render: function(){
 
@@ -44,7 +61,7 @@ var Saved = React.createClass({
 														<a href={archive[i].url} target="_blank">
 															<button className="btn btn-info">View Article</button>
 														</a>
-														<button className="btn btn-danger">Delete</button>
+														<button className="btn btn-danger" onClick={this.handleClick.bind(this, article)}>Delete</button>
 													</span>
 												</h3>
 												<p>
@@ -55,7 +72,7 @@ var Saved = React.createClass({
 											</div>
 										</li>
 
-									})}
+									}.bind(this))}
 
 								</ul>
 

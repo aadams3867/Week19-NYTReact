@@ -105,7 +105,7 @@ app.post('/api/saved', function(req, res){
 // This route sends DELETE requests to delete a saved article in MongoDB
 app.delete('/api/saved', function(req, res){
 
-  var url = req.params('url');
+  var url = req.param('url');
 
   // Remove the one saved article using the article's url
   Article.find({"url": url}).remove()
@@ -114,7 +114,6 @@ app.delete('/api/saved', function(req, res){
         console.log(err);
       } else {
         console.log("One Article document successfully deleted!");
-        console.log("Article: " + req.params.title);
         res.send(doc);
       }
     })
